@@ -1,0 +1,35 @@
+<!-- partial-home.html -->
+
+<script>
+$(document).ready(function(){
+    var email,pass;
+    $("#submit").click(function(){
+        email=$("#email").val();
+        pass=$("#password").val();
+        /*
+        * Perform some validation here.
+        */
+        $.post("http://localhost:3000/login",{email:email,pass:pass},function(data){        
+            if(data==='done')           
+            {
+                window.location.href="/admin";
+            }
+        });
+    });
+});
+</script>
+
+<div class="jumbotron text-center">
+    <h1>The Homey Page</h1>
+    <p>This page demonstrates <span class="text-danger">nested</span> views.</p>  
+
+    <a ui-sref=".list" class="btn btn-primary">List</a>
+    <a ui-sref=".paragraph" class="btn btn-danger">Paragraph</a>
+</div>
+
+<div ui-view></div>
+<hr />
+LOGIN HERE<br />
+<input type="text" size="40" placeholder="Type your email" id="email"><br />
+<input type="password" size="40" placeholder="Type your password" id="password"><br />
+<input type="button" value="Submit" id="submit">

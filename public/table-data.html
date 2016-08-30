@@ -1,0 +1,14 @@
+<table border="1" width="100%">
+	<thead>
+	<tr>
+		<td>Scotch</td>
+		<td>Price</td>
+	</tr>
+	</thead>
+	<tbody>
+    <tr ng-repeat="scotch in scotches">
+    	<td>{{ scotch.name }}</td>
+    	<td>${{ scotch.price }}</td>
+    </tr>
+    </tbody>
+</table>

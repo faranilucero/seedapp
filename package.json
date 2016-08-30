@@ -1,0 +1,24 @@
+{
+  "name": "seedapp",
+  "version": "0.1.0",
+  "email": "faranilucero@gmail.com",
+  "description": "seedapp",
+  "repository": {
+  	"type" : "git",
+  	"url" : "https://github.com/faranilucero/seedapp.git"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+
+  },
+  "dependencies": {
+  	"bower": "1.7.x",
+  	"body-parser": "1.15.x",
+  	"bootstrap": "^3.3.x",
+  	"jquery": "^3.1.x",
+    "angular": "^1.5.x",
+    "angular-ui-router": "1.0.0-alpha.5",  	
+	"express": "4.x",
+	"express-session": "1.14.x"
+  }
+}
