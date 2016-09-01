@@ -1,5 +1,5 @@
-var sessionMode = 'test' // test or production
-  , dbMode = 'test' // test or production
+var sessionMode = 'production' // test or production
+  , dbMode = 'production' // test or production
   ;
 
 var express = require('express')
