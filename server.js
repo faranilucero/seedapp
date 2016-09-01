@@ -1,14 +1,19 @@
-var express = require('express');
-var port = process.env.PORT || 8080;
-var mysqlPort = process.env.mysqlPort || 3000;
-var session = require('express-session');
-var bodyParser = require('body-parser');  
-var app = express();
-var db = require('./db');
-var sess;
+var express = require('express')
+  , port = process.env.PORT || 8080
+  , mysqlPort = process.env.mysqlPort || 3000
+  , session = require('express-session')
+  , RedisStore = require('connect-redis')(session)
+  , bodyParser = require('body-parser')
+  , app = express()
+  , db = require('./db')
+  , sess
+  , sessionMode = 'production' 
+  , redisProduction = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
+  , redisTest = { host: 'localhost', port: 6379 }
+  , redisOptions = sessionMode === 'test' ? redisTest : redisProduction;
 
 // CONNECT TO MYSQL
-db.connect(db.MODE_TEST, function(err) {
+db.connect(db.MODE_PRODUCTION, function(err) {
   if (err) {
     console.log('Unable to connect to MySQL.')
     process.exit(1);
@@ -26,12 +31,14 @@ app.use('/lib/jquery',             express.static(__dirname + '/node_modules/jqu
 app.use('/lib/angular',            express.static(__dirname + '/node_modules/angular/'));
 app.use('/lib/angular-ui-router',  express.static(__dirname + '/node_modules/angular-ui-router/release/'));
 
-// CONFIGURE EXPRESS
+// CONFIGURE EXPRESS SESSIONS
 app.use(session({
-  secret: 'secretword',
-  resave: false,
-  saveUninitialized: false  
+    store: new RedisStore(redisOptions),
+    secret: 'secret-word',
+    resave: false,
+    saveUninitialized: false  
 }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
