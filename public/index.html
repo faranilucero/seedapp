@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
     <style>
         .navbar { border-radius:0; }
+        li.nav-logout { display: none; }
     </style>
 
     <!-- JS (load jQuery, angular, ui-router, and our custom js file) -->
     <script src="/lib/jquery/jquery.min.js"></script>
-    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular/angular.min.js"></script>    
     <script src="/lib/angular-ui-router/angular-ui-router.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
-
     <script src="app.js"></script>
 </head>
 
@@ -25,11 +25,13 @@
 <!-- NAVIGATION -->
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
-        <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
+        <a class="navbar-brand" ui-sref="home">seedapp</a>
     </div>
     <ul class="nav navbar-nav">
         <li><a ui-sref="home">Home</a></li>
         <li><a ui-sref="about">About</a></li>
+        <li><a ui-sref="forms">Admin Forms</a></li>
+        <li class="nav-logout"><a href="/logout">Logout</a></li>
     </ul>
 </nav>
 

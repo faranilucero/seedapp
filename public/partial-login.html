@@ -1,0 +1,33 @@
+<script>
+$(document).ready(function(){
+    var email,pass;
+    function submitLogin() {
+        email=$("#email").val();
+        pass=$("#password").val();
+
+        if (email.length > 0 && pass.length > 0) {
+            $.post(globalVars.serverURL + "/login", { email:email, pass:pass },
+                function(results) {
+                    if(results.status==='valid')           
+                    {
+                        localStorage.email = results.email;
+                        window.location.href="/#/forms";
+                    }
+                    else {
+                        alert('email/password is ' + results.status);
+                    }
+                }
+            );
+        } else {
+            alert('please enter an email & password');
+        }        
+    }
+
+    $("#submit").click(submitLogin);
+});
+</script>
+
+LOGIN HERE<br />
+<input class="login-form" type="text" size="40" placeholder="Type your email" id="email"><br />
+<input class="login-form" type="password" size="40" placeholder="Type your password" id="password"><br />
+<input type="button" value="Submit" id="submit">

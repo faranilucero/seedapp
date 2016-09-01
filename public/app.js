@@ -1,32 +1,44 @@
+var globalVars = {} || globalVars;
+globalVars.serverURL = 'http://localhost:8080';
+
 var routerApp = angular.module('routerApp', ['ui.router']);
     
-routerApp.config(function($stateProvider, $urlRouterProvider) {
-    
+routerApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {    
     $urlRouterProvider.otherwise('/home');
-    
-    $stateProvider
 
+    $stateProvider
     // HOME STATES AND NESTED VIEWS ========================================
+    .state("forms", {
+      url: "/forms",
+      templateUrl: "partial-forms.html",
+      authenticate: true      
+    })
+    .state("login", {
+      url: "/login",
+      templateUrl: "partial-login.html",
+      authenticate: false
+    })    
+
     .state('home', {
         url: '/home',
-        templateUrl: 'partial-home.html'
+        templateUrl: 'partial-home.html',
+        authenticate: false
     })
-
     // nested list with custom controller
     .state('home.list', {
         url: '/list',
         templateUrl: 'partial-home-list.html',
         controller: function($scope) {
             $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
-        }
+        },
+        authenticate: false
     })
-
     // nested list with just some random string data
     .state('home.paragraph', {
         url: '/paragraph',
-        template: 'I could sure use a drink right now.'
+        template: 'Paragraph content goes here.',
+        authenticate: false
     })
-
     .state('about', {
         url: '/about',
         views: {
@@ -40,33 +52,61 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             // for column two, we'll define a separate controller 
             'columnTwo@about': { 
                 templateUrl: 'table-data.html',
-                controller: 'scotchController'
+                controller: 'dataController'
             }
-        }
-        
+        },
+        authenticate: false        
     });
+});
 
-}); // closes $routerApp.config()
-
-
-// let's define the scotch controller that we call up in the about state
-routerApp.controller('scotchController', function($scope) {
-    
-    $scope.message = 'test';
-   
-    $scope.scotches = [
+// CONTROLLERS
+routerApp.controller('dataController', function($scope) {    
+    $scope.message = 'test message';
+    $scope.items = [
         {
-            name: 'Macallan 12',
+            name: 'item 1',
             price: 50
         },
         {
-            name: 'Chivas Regal Royal Salute',
+            name: 'item 2',
             price: 10000
         },
         {
-            name: 'Glenfiddich 1937',
+            name: 'item 3',
             price: 20000
         }
     ];
-    
+});
+
+
+// AUTHENTICATION SERVICE
+routerApp.service('AuthService', function() {
+    this.isAuthenticated = function() {
+        var returnValue = false;
+        jQuery.ajax({
+          type: 'POST',
+          url: globalVars.serverURL + '/isSignedIn',
+          data: {email : window.localStorage.email},
+          success: function(results) {
+            if (results.signedInStatus) {
+                window.localStorage.isSignedIn = true;
+                returnValue = true;
+            }
+          },
+          dataType: 'json',
+          async:false
+        });
+        return returnValue;
+    };
+});
+
+// LISTENER FOR ANGULAR STATE CHANGES
+routerApp.run(function ($rootScope, $state, AuthService) {
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      if (toState.authenticate && !AuthService.isAuthenticated()){
+        // User isn’t authenticated
+        $state.transitionTo("login");
+        event.preventDefault(); 
+      }
+    });
 });
