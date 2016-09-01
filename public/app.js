@@ -95,8 +95,7 @@ routerApp.service('AuthService', function() {
                 returnValue = true;
             }
           },
-          dataType: 'json',
-          async:false
+          dataType: 'json'
         });
         return returnValue;
     };
