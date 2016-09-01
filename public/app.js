@@ -1,6 +1,6 @@
 var globalVars = {} || globalVars;
 
-globalVars.MODE = 'test',
+globalVars.MODE = 'production',
 globalVars.serverURL = globalVars.MODE === 'test' ? 'http://localhost:8080': 'https://seedappjs.herokuapp.com';
 
 var routerApp = angular.module('routerApp', ['ui.router']);
