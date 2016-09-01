@@ -1,19 +1,22 @@
+var sessionMode = 'production' // test or production
+  , dbMode = 'production' // test or production
+  ;
+
 var express = require('express')
   , port = process.env.PORT || 8080
   , mysqlPort = process.env.mysqlPort || 3000
   , session = require('express-session')
   , RedisStore = require('connect-redis')(session)
   , bodyParser = require('body-parser')
-  , app = express()
   , db = require('./db')
-  , sess
-  , sessionMode = 'production' 
-  , redisProduction = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
-  , redisTest = { host: 'localhost', port: 6379 }
-  , redisOptions = sessionMode === 'test' ? redisTest : redisProduction;
+  , app = express()
+  , REDIS_PRODUCTION = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
+  , REDIS_TEST = { host: 'localhost', port: 6379 }
+  , redisOptions = sessionMode === 'production' ? REDIS_PRODUCTION : REDIS_TEST
+  , sess;
 
 // CONNECT TO MYSQL
-db.connect(db.MODE_PRODUCTION, function(err) {
+db.connect(dbMode, function(err) {
   if (err) {
     console.log('Unable to connect to MySQL.')
     process.exit(1);
@@ -38,10 +41,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false  
 }));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
 
 // SETUP ENDPOINTS
 app.get('/', function(req, res) {
@@ -50,13 +51,10 @@ app.get('/', function(req, res) {
 
 // VALIDATE AUTHENTICATION STATUS
 app.post('/isSignedIn', function(req, res) {
-  var returnValue = false;
   sess = req.session;
 
-  if (sess.email !== undefined && req.body.email == sess.email) {
-    returnValue = true;
-  }
-
+  var returnValue = 
+    (sess !== undefined && sess.email !== undefined && req.body.email === sess.email) ? true : false;
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ signedInStatus: returnValue }));
 });

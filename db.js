@@ -9,9 +9,6 @@ var PRODUCTION_DB = 'heroku_1548ab8f11f528f'
   , TEST_USER = 'root'
   , TEST_PASS = 'KGBrani143$$';
 
-exports.MODE_TEST = 'mode_test';
-exports.MODE_PRODUCTION = 'mode_production';
-
 var state = {
   pool: null,
   mode: null,
@@ -19,10 +16,10 @@ var state = {
 
 exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
-    host: mode === exports.MODE_PRODUCTION ? PRODUCTION_HOST : TEST_HOST,
-    user: mode === exports.MODE_PRODUCTION ? PRODUCTION_USER : TEST_USER,
-    password: mode === exports.MODE_PRODUCTION ? PRODUCTION_PASS : TEST_PASS,
-    database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
+    host: mode === 'production' ? PRODUCTION_HOST : TEST_HOST,
+    user: mode === 'production' ? PRODUCTION_USER : TEST_USER,
+    password: mode === 'production' ? PRODUCTION_PASS : TEST_PASS,
+    database: mode === 'production' ? PRODUCTION_DB : TEST_DB
   });
 
   state.mode = mode;
