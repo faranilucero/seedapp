@@ -1,5 +1,5 @@
-var sessionMode = 'production' // test or production
-  , dbMode = 'production' // test or production
+var sessionMode = 'test' // test or production
+  , dbMode = 'test' // test or production
   ;
 
 var express = require('express')
@@ -13,7 +13,8 @@ var express = require('express')
   , REDIS_PRODUCTION = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
   , REDIS_TEST = { host: 'localhost', port: 6379 }
   , redisOptions = sessionMode === 'production' ? REDIS_PRODUCTION : REDIS_TEST
-  , sess;
+  , sess
+  ;
 
 // CONNECT TO MYSQL
 db.connect(dbMode, function(err) {
@@ -28,11 +29,11 @@ db.connect(dbMode, function(err) {
 });
 
 // EXPOSE DIRECTORIES TO WEBSERVER/PUBLIC
-app.use(express.static(__dirname + '/public'));
-app.use('/lib/bootstrap',          express.static(__dirname + '/node_modules/bootstrap/dist/'));
-app.use('/lib/jquery',             express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/lib/angular',            express.static(__dirname + '/node_modules/angular/'));
-app.use('/lib/angular-ui-router',  express.static(__dirname + '/node_modules/angular-ui-router/release/'));
+app.use(express.static(__dirname + '/../public'));
+app.use('/lib/bootstrap',          express.static(__dirname + '/../node_modules/bootstrap/dist/'));
+app.use('/lib/jquery',             express.static(__dirname + '/../node_modules/jquery/dist/'));
+app.use('/lib/angular',            express.static(__dirname + '/../node_modules/angular/'));
+app.use('/lib/angular-ui-router',  express.static(__dirname + '/../node_modules/angular-ui-router/release/'));
 
 // CONFIGURE EXPRESS SESSIONS
 app.use(session({
@@ -52,9 +53,9 @@ app.get('/', function(req, res) {
 // VALIDATE AUTHENTICATION STATUS
 app.post('/isSignedIn', function(req, res) {
   sess = req.session;
-
   var returnValue = 
     (sess !== undefined && sess.email !== undefined && req.body.email === sess.email) ? true : false;
+
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ signedInStatus: returnValue }));
 });

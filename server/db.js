@@ -29,4 +29,3 @@ exports.connect = function(mode, done) {
 exports.get = function() {
   return state.pool;
 };
-
