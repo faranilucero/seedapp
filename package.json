@@ -10,9 +10,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "gulp sass & gulp templates",
+    "redis": "/data/redis/src/redis-server",
     "dev": "nodemon server/server.js & /data/redis/src/redis-server & gulp watch-dev",
-    "start": "node server/server.js"
-  },  
+    "start": "gulp sass & gulp templates & node server/server.js"
+  },   
   "devDependencies": {
     "nodemon": "~1.3.7"
   },
