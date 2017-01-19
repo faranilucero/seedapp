@@ -11,9 +11,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     // HOME STATES AND NESTED VIEWS ========================================
     .state("forms", {
         url: "/forms",
-        templateProvider: ['$templateCache', ($templateCache) => {
-            return $templateCache.get('admin/partial-forms.html')
-        }],
+        templateUrl: "partial-forms.html",
         authenticate: true      
     })
     .state("login", {
