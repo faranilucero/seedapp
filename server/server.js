@@ -9,12 +9,14 @@ var express = require('express')
   , RedisStore = require('connect-redis')(session)
   , bodyParser = require('body-parser')
   , db = require('./db')
+  , node_crypto = require('./node_crypto')
   , app = express()
   , REDIS_PRODUCTION = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
   , REDIS_TEST = { host: 'localhost', port: 6379 }
   , redisOptions = sessionMode === 'production' ? REDIS_PRODUCTION : REDIS_TEST
   , sess
   ;
+
 
 // CONNECT TO MYSQL
 db.connect(dbMode, function(err) {
@@ -34,6 +36,9 @@ app.use('/lib/bootstrap',          express.static(__dirname + '/../node_modules/
 app.use('/lib/jquery',             express.static(__dirname + '/../node_modules/jquery/dist/'));
 app.use('/lib/angular',            express.static(__dirname + '/../node_modules/angular/'));
 app.use('/lib/angular-ui-router',  express.static(__dirname + '/../node_modules/angular-ui-router/release/'));
+app.use('/lib/font-awesome',       express.static(__dirname + '/../node_modules/font-awesome/'));
+app.use('/css',       express.static(__dirname + '/../public/css/'));
+app.use('/js',       express.static(__dirname + '/../public/js/'));
 
 // CONFIGURE EXPRESS SESSIONS
 app.use(session({
@@ -63,21 +68,48 @@ app.post('/isSignedIn', function(req, res) {
 // PROCESS LOGIN REQUEST
 app.post('/login', function(req, res){
   var returnStatus = 'invalid';
+  var emailSubmit = req.body.email;
+  var passwordSubmit = req.body.pass;
   sess = req.session;
-  
-  db.get().query('SELECT USER_ID, USER_EMAIL_ADDRESS FROM USERS WHERE ACTIVE = 1 AND LOCKED_OUT = 0 AND USER_EMAIL_ADDRESS = ?', req.body.email, 
+
+  if (req.session == undefined) {
+    console.log('Unable to connect to Redis server.');  
+  }
+
+  db.get().query('SELECT USER_ID, USER_EMAIL_ADDRESS FROM USERS WHERE ACTIVE = 1 AND LOCKED_OUT = 0 AND USER_EMAIL_ADDRESS = ? LIMIT 0,1', emailSubmit, 
     function (err, rows) {
       if (err) 
         console.log(err);
       else {      
-        for (var i = 0; i < rows.length; i++) {
-          if (rows[i].USER_EMAIL_ADDRESS === req.body.email) {
-            sess.email = rows[i].USER_EMAIL_ADDRESS;
-            returnStatus = 'valid';
+        if (rows.length == 0) {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(JSON.stringify({ status: 'invalid' , email : emailSubmit }));                                  
+        } else {
+          for (var i = 0; i < rows.length; i++) {
+            if (rows[i].USER_EMAIL_ADDRESS === emailSubmit) {            
+              db.get().query('SELECT USER_PASSWORD_HASH FROM USER_PASSWORDS UP INNER JOIN USERS U ON UP.USER_ID = U.USER_ID WHERE U.USER_EMAIL_ADDRESS = ? ORDER BY TIME_STAMP DESC LIMIT 0,1', rows[i].USER_EMAIL_ADDRESS,
+                function (err, passwordRows) {
+                  if (err) 
+                    console.log(err);
+                  else {      
+                    for (var j = 0; j < passwordRows.length; j++) {
+                      node_crypto.verifyPassword(passwordSubmit, passwordRows[j].USER_PASSWORD_HASH, function(err, result) {
+                        if (result) {
+                          sess.email = emailSubmit;
+                          res.setHeader('Content-Type', 'application/json');
+                          res.send(JSON.stringify({ status: 'valid' , email : emailSubmit }));                        
+                        } else {                        
+                          res.setHeader('Content-Type', 'application/json');
+                          res.send(JSON.stringify({ status: 'invalid' , email : emailSubmit }));                        
+                        }
+                      });
+                    }
+                  }
+                }
+              );
+            }
           }
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ status: returnStatus , email : sess.email }));
       }
     }
   );

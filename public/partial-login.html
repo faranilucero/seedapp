@@ -11,6 +11,7 @@ $(document).ready(function(){
                     if(results.status==='valid')           
                     {
                         localStorage.email = results.email;
+                        localStorage.isSignedIn = true;
                         window.location.href="/#/forms";
                     }
                     else {

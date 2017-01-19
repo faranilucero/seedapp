@@ -1,27 +1,26 @@
 var globalVars = {} || globalVars;
 
-globalVars.MODE = 'production' // test or production
-, globalVars.serverURL = globalVars.MODE === 'production' ? 'https://seedappjs.herokuapp.com' : 'http://localhost:8080'
-;
+globalVars.MODE = 'production', // test or production
+globalVars.serverURL = globalVars.MODE === 'production' ? 'https://seedappjs.herokuapp.com' : 'http://localhost:8080';
 
-var routerApp = angular.module('routerApp', ['ui.router']);
-    
+var routerApp = angular.module('routerApp', ['ui.router']);    
 routerApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {    
     $urlRouterProvider.otherwise('/home');
 
     $stateProvider
     // HOME STATES AND NESTED VIEWS ========================================
     .state("forms", {
-      url: "/forms",
-      templateUrl: "partial-forms.html",
-      authenticate: true      
+        url: "/forms",
+        templateProvider: ['$templateCache', ($templateCache) => {
+            return $templateCache.get('admin/partial-forms.html')
+        }],
+        authenticate: true      
     })
     .state("login", {
       url: "/login",
       templateUrl: "partial-login.html",
       authenticate: false
     })    
-
     .state('home', {
         url: '/home',
         templateUrl: 'partial-home.html',
@@ -45,7 +44,6 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     .state('about', {
         url: '/about',
         views: {
-
             // the main template will be placed here (relatively named)
             '': { templateUrl: 'partial-about.html' },
 
@@ -66,21 +64,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 routerApp.controller('dataController', function($scope) {    
     $scope.message = 'test message';
     $scope.items = [
-        {
-            name: 'item 1',
-            price: 50
-        },
-        {
-            name: 'item 2',
-            price: 10000
-        },
-        {
-            name: 'item 3',
-            price: 20000
-        }
+        { name: 'item 1', price: 50 },
+        { name: 'item 2', price: 10000 },
+        { name: 'item 3', price: 20000 }
     ];
 });
-
 
 // AUTHENTICATION SERVICE
 routerApp.service('AuthService', function() {
@@ -92,21 +80,21 @@ routerApp.service('AuthService', function() {
           data: {email : window.localStorage.email},
           success: function(results) {
             if (results.signedInStatus) {
-                window.localStorage.isSignedIn = true;
                 returnValue = true;
             }
           },
           dataType: 'json',
           async: false
         });
+        window.localStorage.isSignedIn = returnValue;
         return returnValue;
     };
 });
 
 // LISTENER FOR ANGULAR STATE CHANGES
 routerApp.run(function ($rootScope, $state, AuthService) {
-    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-      if (toState.authenticate && !AuthService.isAuthenticated()){
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+      if (toState.authenticate && !AuthService.isAuthenticated()) {
         // User isn’t authenticated
         $state.transitionTo("login");
         event.preventDefault(); 

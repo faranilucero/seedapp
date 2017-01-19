@@ -4,8 +4,10 @@
 <html>
 <head>
 
-    <!-- CSS (load bootstrap) -->
+    <!-- CSS (load bootstrap, font-awesome) -->
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">    
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <style>
         .navbar { border-radius:0; }
         li.nav-logout { display: none; }
@@ -16,7 +18,7 @@
     <script src="/lib/angular/angular.min.js"></script>    
     <script src="/lib/angular-ui-router/angular-ui-router.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
 </head>
 
 <!-- apply our angular app to our site -->
@@ -30,7 +32,7 @@
     <ul class="nav navbar-nav">
         <li><a ui-sref="home">Home</a></li>
         <li><a ui-sref="about">About</a></li>
-        <li><a ui-sref="forms">Admin Forms</a></li>
+        <li class="nav-login"><a ui-sref="forms"><i class="fa fa-sign-in"></i> Login</a></li>
         <li class="nav-logout"><a href="/logout">Logout</a></li>
     </ul>
 </nav>
