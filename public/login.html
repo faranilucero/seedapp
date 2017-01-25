@@ -1,0 +1,300 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/includes/images/favicon.ico" rel="shortcut icon">
+<title>Dev-Local | Equator Workstation 5.0</title>
+<meta content="" name="keywords">
+<meta content="" name="description">
+<link type="text/css" rel="stylesheet" media="all" href="/resource/external/jquery/plugins/qtip/jquery.qtip.min.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/resource/external/jquery/themes/equator/jquery-ui-1.8.14.custom.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/resource/external/jquery/plugins/datatables/jquery.dataTables.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="http://fonts.googleapis.com/css?family=Open+Sans?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/includes/css/lib/font-awesome/4.6.3/css/font-awesome.min.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/includes/css/_portal/buyer/reset.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/includes/css/_portal/buyer/preLogin.css?v=10.02">
+<link type="text/css" rel="stylesheet" media="all" href="/includes/css/_portal/buyer/responsive.css?v=10.02">
+<script src="/resource/external/jquery/jquery-1.5.2.min.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/layouts/_portal/landing.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/external/jquery/jquery-ui-1.8.15.custom.min.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/external/jquery/plugins/jquery.equator.plugins-1.0.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/equator-evolution.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/equator.jquery-validate.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/evolution.jquery.setup.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/equator.global.allPortals.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/layouts/_portal/vendor/Layout.Vendor.Security.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/layouts/_portal/PreLogin.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/equator.token.js?v=10.02" type="text/javascript"></script>
+<script src="/resource/internal/frame_buster.js?v=10.02" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="https://secure.pointillist.com/analytics/pntlst-main.css">
+<div style="width: 1px; height: 1px; display: inline; position: absolute;">
+<img width="1" height="1" src="https://d.adroll.com/cm/aol/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/index/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/n/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/pubmatic/out" alt="" style="border-style:none;">
+</div>
+
+<div style="width: 1px; height: 1px; display: inline; position: absolute;">
+<img width="1" height="1" src="https://d.adroll.com/cm/r/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/f/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/b/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/w/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/x/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/l/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/o/out" alt="" style="border-style:none;">
+<img width="1" height="1" src="https://d.adroll.com/cm/g/out?google_nid=adroll5" alt="" style="border-style:none;">
+</div>
+<img width="1" height="1" border="0" src="https://d.adroll.com/id/CMIHLROBQRGSBHQUUCRW5U/?hashed_email=1166ed74b59ad056b581bd6bf3d0597d&idsource=sendrolling">
+</head>
+<body>
+<header class="displayFlex">
+<article class="headerContainer divCenter">
+<div class="headerLeft">
+<nav>
+<a class="toggle" href="#">
+<i class="fa fa-bars" aria-hidden="true"></i>
+</a>
+</nav>
+<h1 class="logo">
+<a href="./" oldtitle="Return to Home Page">Hubzu</a>
+</h1>
+</div>
+<div class="headerRight">
+<a class="loginBtn buttonLink" href="#">Login</a>
+<div class="login loginModal modalPopup">
+<a class="close-login" href="#">
+<i class="fa fa-close"></i>
+</a>
+<div class="loginModalcontent">
+<h2>Buyer Portal Login</h2>
+<form id="loginForm" class="tokenResetRescure" autocomplete="off" onsubmit="return validateLogin();" name="loginForm" method="post" action="index.cfm">
+<input id="auth_username" type="hidden" name="auth_username">
+<input id="auth_password" type="hidden" name="auth_password">
+<div class="field-wrap input-group-custom">
+<span class="input-group-addon-custom">
+<i class="fa fa-user fa-fw"></i>
+</span>
+<input id="enter_username" type="email" placeholder="Username" autocomplete="off" required="">
+</div>
+<div class="field-wrap input-group-custom">
+<span class="input-group-addon-custom">
+<i class="fa fa-key fa-fw"></i>
+</span>
+<input id="enter_password" type="password" placeholder="Password" autocomplete="off" required="">
+</div>
+<button class="buttonLogin button button-block buttonLink ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+<span class="ui-button-text">Login</span>
+</button>
+<p class="subRow">
+<a class="forgot" href="#">Forgot Password?</a>
+|
+<a href="#">
+<i class="fa fa-info-circle"></i>
+System Requirements
+</a>
+</p>
+<input type="hidden" value="d68434fdC0A80DA02546c77f7bb99db6" name="eqrf">
+</form>
+</div>
+</div>
+<a class="helpBtn textLink" href="#">
+<i class="fa fa-question-circle" aria-hidden="true"></i>
+Help
+</a>
+</div>
+<div class="forgotPassword forgotPasswordModal modalPopup">
+<a class="close-forgot" href="#">
+<i class="fa fa-close"></i>
+</a>
+<div class="forgotPasswordModalcontent">
+<h2>Forgot Password</h2>
+<p>Enter username below to reset your password.</p>
+<form id="forgotPasswordForm" class="tokenResetRescure" autocomplete="off" onsubmit="return false;" name="forgotPasswordForm" method="post" action="">
+<div class="field-wrap input-group-custom">
+<span class="input-group-addon-custom">
+<i class="fa fa-user fa-fw"></i>
+</span>
+<input id="forgot_username" type="email" placeholder="Username" autocomplete="off" required="">
+</div>
+<p>Enter the text in the image below to prove you're not a robot.</p>
+<div class="field-wrap">
+<input type="text" placeholder="Text from image above" autocomplete="off" required="">
+</div>
+<button class="buttonSubmit button button-block buttonLink ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+<span class="ui-button-text">Submit</span>
+</button>
+<input type="hidden" value="d68434fdC0A80DA02546c77f7bb99db6" name="eqrf">
+</form>
+</div>
+</div>
+</article>
+</header>
+<main>
+<section class="banner">
+<article class="bannerImg">
+<div class="heroCaption">
+<h2>Congrats on your winning bid on Hubzu!</h2>
+<p>Begin tracking the process of getting your keys here.</p>
+</div>
+<img src="/includes/images/_portal/buyer/landing-hero.jpg">
+</article>
+</section>
+<section class="landingIntro content">
+<h2>The Hubzu Buyer Portal Experience</h2>
+<p class="caption greyTxt">Your source of information on your winning Hubzu bids</p>
+<article class="landingIntrocontainer">
+<div class="landingIntrowrapper displayFlex divCenter">
+<div class="landingIntroitems divProperty">
+<h5>Your Properties</h5>
+<p class="greyTxt">Your online window into your future home. See all of your current and past winning bids.</p>
+</div>
+<div class="landingIntroitems divMobile">
+<h5>Web and Mobile Accessible</h5>
+<p class="greyTxt">As you get closer to getting your hands on those new house keys, stay constantly informed while on the move</p>
+</div>
+<div class="landingIntroitems divTracking">
+<h5>Milestones and Process Tracking</h5>
+<p class="greyTxt">Home ownership is a simple set of 1 - 2 - 3 steps. See how much progress has been made and how many more days to get your home keys</p>
+</div>
+</div>
+</article>
+</section>
+<section class="keyProcess content">
+<h2>Simple 3 step process to keys</h2>
+<p class="caption">Your source of information on your winning Hubzu bids</p>
+<article class="keyProcesswrapper displayFlex divCenter">
+<img src="/includes/images/_portal/buyer/landing-buyer_portal_steps-v2.png">
+</article>
+<article class="keyProcesswrapper displayFlex divCenter">
+<div class="processStep step1 displayFlex">
+<h5>WIN HUBZU AUCTION</h5>
+<p>Congratulations! you had the winning bid in your Hubzu auction.</p>
+</div>
+<div class="processStep step2 displayFlex">
+<h5>TRACK OWNERSHIP ROADMAP</h5>
+<p>Gain peace of mind of by seeing the current progress of your closing steps.</p>
+</div>
+<div class="processStep step3 displayFlex">
+<h5>TAKE OWNERSHIP AND GET KEYS</h5>
+<p>Final execution of closing and time to enjoy your new purchase.</p>
+</div>
+</article>
+</section>
+</main>
+<footer>
+<section class="content footerSection">
+<article class="footerMenu displayFlex divCenter">
+<div class="menuWrapper node1">
+<p>Contact</p>
+<ul>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-whatsapp" aria-hidden="true"></i>
+Live Chat
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+Email
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-user" aria-hidden="true"></i>
+Customer Support
+</a>
+</li>
+</ul>
+</div>
+<div class="menuWrapper node2">
+<p>FAQ</p>
+<ul>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-play" aria-hidden="true"></i>
+How to get your username
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-play" aria-hidden="true"></i>
+How to reset your password
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-file-image-o" aria-hidden="true"></i>
+Selecting a property
+</a>
+</li>
+</ul>
+</div>
+<div class="menuWrapper node3">
+<p>Privacy and Legal</p>
+<ul>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+Privacy Policy
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+Terms of Use
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+Legal Docs
+</a>
+</li>
+</ul>
+</div>
+<div class="menuWrapper node4">
+<p>Social Media</p>
+<ul>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-facebook-square" aria-hidden="true"></i>
+Facebook
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-twitter-square" aria-hidden="true"></i>
+Twitter
+</a>
+</li>
+<li class="menuItem">
+<a href="#">
+<i class="fa fa-linkedin-square" aria-hidden="true"></i>
+Linkedin
+</a>
+</li>
+</ul>
+</div>
+</article>
+<article class="copyRight displayFlex divCenter">
+<div class="crdivLeft">
+<p>© 2016 Equator®. An Altisource® Business Unit. All Rights Reserved.</p>
+</div>
+<div class="crdivRight">
+<p>
+Powered by:
+<img width="auto" alt="equator" src="/includes/images/_portal/buyer/eq-text-icon.png">
+</p>
+</div>
+</article>
+</section>
+</footer>
+
+<div style="display: none;">
+<img width="0" height="0" src="https://nova.collect.igodigital.com/c2/7236455/track_page_view?payload=%7B%22title%22%3A%22Dev-Local%20%7C%20Equator%20Workstation%205.0%22%2C%22url%22%3A%22http%3A%2F%2F1001global.buy.dev.eqlocal%2Findex.cfm%3Fevent%3Dsecurity.doLogout%22%2C%22referrer%22%3A%22http%3A%2F%2F1001global.buy.dev.eqlocal%2Findex.cfm%3Fevent%3Dbuyer.home%22%7D" style="display: none;" title="blank image" aria-hidden="true">
+</div>
+</body>
+</html>
