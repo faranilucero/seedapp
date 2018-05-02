@@ -71,20 +71,18 @@ app.post('/login', (req, res) => {
   db.get().query('SELECT USER_ID, USER_EMAIL_ADDRESS FROM USERS WHERE USER_EMAIL_ADDRESS = ? AND ACTIVE = 1 AND LOCKED_OUT = 0 LIMIT 0,1', [emailSubmit], (err, result) => {
     if (err) console.log(err);
     else if (result.length == 0) {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ status: 'invalid' , email : emailSubmit }));                                  
+      return res.redirect('/#!/login?status=invalid');
     } else if (result.length > 0 && result[0].USER_EMAIL_ADDRESS === emailSubmit) {            
       db.get().query('SELECT USER_PASSWORD_HASH FROM USER_PASSWORDS UP INNER JOIN USERS U ON UP.USER_ID = U.USER_ID WHERE USER_EMAIL_ADDRESS = ? ORDER BY TIME_STAMP DESC LIMIT 0,1', [result[0].USER_EMAIL_ADDRESS], (err, passwordResult) => {
         if (err) console.log(err);
         else {      
           node_crypto.verifyPassword(passwordSubmit, passwordResult[0].USER_PASSWORD_HASH, (err, verifyResult) => {
-            var passwordStatus = false;
             if (verifyResult) {
               req.session.email = emailSubmit;
-              passwordStatus = true;
+              return res.redirect('/#!/forms');
+            } else {
+              return res.redirect('/#!/login?status=invalid');
             }
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: passwordStatus ? 'valid' : 'invalid' , email : emailSubmit }));                                    
           });
         }
       });

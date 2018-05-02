@@ -1,34 +1,28 @@
 <script>
-$(document).ready(function(){
-    var email,pass;
-    function submitLogin() {
-        email=$("#email").val();
-        pass=$("#password").val();
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.hash.substring(window.location.hash.indexOf('?')+1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
 
-        if (email.length > 0 && pass.length > 0) {
-            $.post(globalVars.serverURL + "/login", { email:email, pass:pass },
-                function(results) {
-                    if(results.status==='valid')           
-                    {
-                        localStorage.email = results.email;
-                        localStorage.isSignedIn = true;
-                        window.location.href="/#/forms";
-                    }
-                    else {
-                        alert('email/password is ' + results.status);
-                    }
-                }
-            );
-        } else {
-            alert('please enter an email & password');
-        }        
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
     }
+};
 
-    $("#submit").click(submitLogin);
+$(document).ready(function(){
+    var status = getUrlParameter('status');
+    console.log(status);
 });
 </script>
 
 LOGIN HERE<br />
-<input class="login-form" type="text" size="40" placeholder="Type your email" id="email"><br />
-<input class="login-form" type="password" size="40" placeholder="Type your password" id="password"><br />
-<input type="button" value="Submit" id="submit">
+<form method="post" action="/login">
+<input class="login-form" type="text" size="40" placeholder="Type your email" id="email" name="email"><br />
+<input class="login-form" type="password" size="40" placeholder="Type your password" id="pass" name="pass"><br />
+<input type="submit" value="Submit">
+</form>

@@ -5,8 +5,8 @@ var globalVars = {} || globalVars;
 globalVars.MODE = 'production', // test or production
 globalVars.serverURL = globalVars.MODE === 'production' ? 'https://seedappjs.herokuapp.com' : 'http://localhost:8080';
 
-var routerApp = angular.module('seedApp', ['ui.router']);
-routerApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+var seedApp = angular.module('seedApp', ['ui.router']);
+seedApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/home');
 
     $stateProvider
@@ -58,13 +58,13 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 });
 
 // CONTROLLERS
-routerApp.controller('dataController', function ($scope) {
+seedApp.controller('dataController', function ($scope) {
     $scope.message = 'test message';
     $scope.items = [{ name: 'item 1', price: 50 }, { name: 'item 2', price: 10000 }, { name: 'item 3', price: 20000 }];
 });
 
 // AUTHENTICATION SERVICE
-routerApp.service('AuthService', function () {
+seedApp.service('AuthService', function () {
     this.isAuthenticated = function () {
         var returnValue = false;
         jQuery.ajax({
@@ -85,7 +85,7 @@ routerApp.service('AuthService', function () {
 });
 
 // LISTENER FOR ANGULAR STATE CHANGES
-routerApp.run(function ($rootScope, $state, AuthService) {
+seedApp.run(function ($rootScope, $state, AuthService) {
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
         if (toState.authenticate && !AuthService.isAuthenticated()) {
             // User isn’t authenticated
@@ -95,4 +95,4 @@ routerApp.run(function ($rootScope, $state, AuthService) {
     });
 });
 
-angular.module("routerApp").run(["$templateCache", function($templateCache) {$templateCache.put("admin/partial-forms.html","    <script>\n        if (localStorage.isSignedIn) {\n        	$(\'li.nav-logout\').show();\n        	$(\'li.nav-login\').hide();	\n        }\n    </script>\n\nYou are signed in and viewing Admin Forms.");}]);
+angular.module("seedApp").run(["$templateCache", function($templateCache) {$templateCache.put("admin/partial-forms.html","    <script>\n        if (localStorage.isSignedIn) {\n        	$(\'li.nav-logout\').show();\n        	$(\'li.nav-login\').hide();	\n        }\n    </script>\n\nYou are signed in and viewing Admin Forms.");}]);
