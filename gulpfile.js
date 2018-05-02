@@ -45,7 +45,7 @@ var DEST = {
 function prepareTemplates() {
   return gulp.src(SOURCE.templates)
     //.pipe(minify and preprocess the template html here)
-    .pipe(templateCache({ module:'routerApp'}))
+    .pipe(templateCache({ module:'seedApp'}))
     ;
 }
 

@@ -1,4 +1,4 @@
-USE base;
+USE baseline;
 
 DROP TABLE IF EXISTS ORGS;
 CREATE TABLE ORGS (

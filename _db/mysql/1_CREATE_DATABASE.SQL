@@ -1,1 +1,1 @@
-CREATE DATABASE base;
+CREATE DATABASE baseline;
