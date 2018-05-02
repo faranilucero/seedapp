@@ -17,6 +17,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 $(document).ready(function(){
     var status = getUrlParameter('status');
     console.log(status);
+    $('li.nav-logout').toggle(localStorage.isSignedIn === 'true');
+    $('li.nav-login').toggle(localStorage.isSignedIn !== 'true');
 });
 </script>
 

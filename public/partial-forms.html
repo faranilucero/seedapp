@@ -1,7 +1,8 @@
-    <script>
-        if (localStorage.isSignedIn) {
-        	$('li.nav-logout').show();
-        }
-    </script>
+<script>
+    $(document).ready(function(){
+        $('li.nav-logout').toggle(localStorage.isSignedIn === 'true');
+        $('li.nav-login').toggle(localStorage.isSignedIn !== 'true');
+    });
+</script>        
 
 MUST BE AUTHENTICATED TO SEE THIS

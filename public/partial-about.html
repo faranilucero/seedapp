@@ -1,5 +1,11 @@
 <!-- partial-about.html -->
-
+<script>
+    $(document).ready(function(){
+        $('li.nav-logout').toggle(localStorage.isSignedIn === 'true');
+        $('li.nav-login').toggle(localStorage.isSignedIn !== 'true');
+    });
+</script>        
+    
 <div class="jumbotron text-center">
     <h1>The About Page</h1>
     <p>This page demonstrates <span class="text-danger">multiple</span> and <span class="text-danger">named</span> views.</p>

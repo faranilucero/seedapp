@@ -64,9 +64,7 @@ app.post('/login', (req, res) => {
   var emailSubmit = req.body.email;
   var passwordSubmit = req.body.pass;
 
-  if (req.session == undefined) {
-    console.log('Unable to connect to Redis server.');  
-  }
+  if (req.session == undefined) console.log('Unable to connect to Redis server.');  
 
   db.get().query('SELECT USER_ID, USER_EMAIL_ADDRESS FROM USERS WHERE USER_EMAIL_ADDRESS = ? AND ACTIVE = 1 AND LOCKED_OUT = 0 LIMIT 0,1', [emailSubmit], (err, result) => {
     if (err) console.log(err);
@@ -77,7 +75,6 @@ app.post('/login', (req, res) => {
         if (err) console.log(err);
         else {      
           node_crypto.verifyPassword(passwordSubmit, passwordResult[0].USER_PASSWORD_HASH, (err, verifyResult) => {
-            console.log(verifyResult);
             if (verifyResult) {
               req.session.email = emailSubmit;
               return res.redirect('/#!/forms');
@@ -95,7 +92,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) console.log(err);
-    else res.redirect('/');
+    else res.redirect('/#!/forms');
   });
 });
 
