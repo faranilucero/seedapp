@@ -77,6 +77,7 @@ app.post('/login', (req, res) => {
         if (err) console.log(err);
         else {      
           node_crypto.verifyPassword(passwordSubmit, passwordResult[0].USER_PASSWORD_HASH, (err, verifyResult) => {
+            console.log(verifyResult);
             if (verifyResult) {
               req.session.email = emailSubmit;
               return res.redirect('/#!/forms');
