@@ -13,6 +13,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+var submitLogin = function() {
+    localStorage.email = $("#email").val();
+};
 
 $(document).ready(function(){
     var status = getUrlParameter('status');
@@ -21,7 +24,7 @@ $(document).ready(function(){
 </script>
 
 LOGIN HERE<br />
-<form method="post" action="/login">
+<form method="post" action="/login" onsubmit="return submitLogin()">
 <input class="login-form" type="text" size="40" placeholder="Type your email" id="email" name="email"><br />
 <input class="login-form" type="password" size="40" placeholder="Type your password" id="pass" name="pass"><br />
 <input type="submit" value="Submit">
