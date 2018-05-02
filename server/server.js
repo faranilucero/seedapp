@@ -11,7 +11,7 @@ var express = require('express')
   , db = require('./db')
   , node_crypto = require('./node_crypto')
   , app = express()
-  , REDIS_PRODUCTION = { host: 'ec2-54-163-236-235.compute-1.amazonaws.com', port: 17759, user: 'h', password: 'pavr1ip4ql1otca11dlp9qb8d59' }
+  , REDIS_PRODUCTION = { host: 'ec2-35-174-64-60.compute-1.amazonaws.com', port: 10159, user: 'h', password: 'p606f2f386e56dd92ce98dafcc0e9ec2e012325d34d48eb3477afc02ef43de70e' }
   , REDIS_TEST = { host: 'localhost', port: 6379 }
   , redisOptions = sessionMode === 'production' ? REDIS_PRODUCTION : REDIS_TEST
   , sess
