@@ -1,7 +1,7 @@
 var globalVars = {} || globalVars;
 
 globalVars.MODE = 'production', // test or production
-globalVars.serverURL = globalVars.MODE === 'production' ? 'https://seedappjs.herokuapp.com' : 'http://localhost:8080';
+globalVars.serverURL = globalVars.MODE === 'production' ? 'https://baselinejsapp.herokuapp.com' : 'http://localhost:8080';
 
 var seedApp = angular.module('seedApp', ['ui.router']);    
 seedApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {    
